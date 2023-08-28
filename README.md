@@ -1,35 +1,36 @@
 # Liver_Tumor_Segmentation
 
 ## LIVER SEGMENTATION USING ACTIVE CONTOUR 
-This repository contains the implementation and evaluation of a liver segmentation algorithm using deformable models. The algorithm's performance is assessed using publicly available liver CT scan datasets. The primary goal is to provide a comprehensive analysis of the algorithm's effectiveness and limitations.
+This repository contains an implementation of a liver segmentation algorithm using active contour models, also known as snakes. The algorithm aims to accurately segment the liver from abdominal CT scans, providing an efficient and automated solution for liver disease diagnosis and treatment planning.
 
 ## Data Set Description
-The liver segmentation algorithm is evaluated on two distinct datasets:
+The algorithm's performance is evaluated using two publicly available datasets: Liver Tumor Segmentation Challenge (LiTS) and 3D Image Reconstruction for Comparison of Algorithm Database (3D-ircadb-01). The LiTS dataset comprises 130 CT scan images, while the 3D-ircadb-01 dataset includes 20 3D CT scans.
 
-- Liver Tumor Segmentation Challenge (LiTS): This dataset comprises 130 CT scan images. It serves as a crucial source of data for evaluating the algorithm's performance.
-- 3D Image Reconstruction for Comparison of Algorithm Database (3D-ircadb-01): This dataset consists of 20 3D CT scans, providing additional depth for a comprehensive assessment.
 ## Pipeline Development
-The algorithm's segmentation pipeline involves the following key steps:
+The liver segmentation pipeline follows the steps outlined below:
 
-1. Data Import: CT scan data is imported, and liver-occupied slices are identified within the dataset.
-2. Slice Selection: Every 10th CT slice is selected within the liver-occupied slice range (slices 280 to 430).
-3. Image Preprocessing: The imported images undergo image preprocessing, including mean, median, and Gaussian 3x3 filter applications. This step aims to reduce noise without compromising image quality.
-4. Contrast Enhancement: Histogram equalization is identified as the most effective contrast enhancement method, enhancing liver boundary definition and overall segmentation quality.
-5. Segmentation: The segmentation algorithm, based on active contours, is applied to the preprocessed images.
-## Discussion of Results
-The evaluation of the algorithm's performance involves several key metrics:
+- Data Import: CT scan images are imported, and a range of slices containing the liver is identified. Every 10th CT slice within this range is selected for analysis.
 
-- Dice Similarity Coefficient: A metric quantifying spatial overlap between segmented and ground truth results. The algorithm achieves a high average Dice coefficient of 91.8% for liver segmentation, comparable to existing studies.
-- Mean Squared Error (MSE): A measure of the difference between segmented and ground truth images. The algorithm attains a low average MSE of 0.0375, indicating accurate segmentations.
-- Segmentation Performance: The algorithm's effectiveness varies based on the complexity of the liver's shape and its proximity to surrounding structures. Performance is observed to decline for more complex liver shapes due to internal energy considerations and edge detection challenges.
-- Liver Volume Estimation: The algorithm calculates liver volumes and achieves a slight 5.8% error when compared to ground truth volumes. This error rate is competitive with related studies.
-## Conclusion and Future Work
-The liver segmentation algorithm, based on active contours, demonstrates strong performance across various metrics. It successfully segments livers with well-defined shapes and performs adequately even for complex shapes. The algorithm's strengths and limitations, particularly its sensitivity to liver complexity, are thoroughly discussed. Future enhancements could focus on refining energy terms and contour initialization to address segmentation challenges for complex liver shapes.
+- Image Preprocessing: Imported images undergo image preprocessing, involving the application of mean, median, and Gaussian 3x3 filters. The goal is to reduce noise while maintaining image clarity. Histogram equalization is identified as the most effective contrast enhancement method.
 
-## Usage Instructions
-To reproduce the results and insights presented in this repository, follow the steps outlined in the provided code files. Ensure that the necessary datasets are obtained from the references provided (LiTS and 3D-ircadb-01). The code includes implementations for preprocessing, contrast enhancement, active contour segmentation, and performance metric calculations.
+- Contour Initialization: Contours are initialized using the thresholding method, transforming the grayscale images into appropriate formats for further processing.
 
-## Result comparison 
+- Contour Deformation: A snake algorithm, an active contour model, is applied for contour deformation. The algorithm iteratively adjusts the contour to fit the liver's boundary.
+
+## Results and Discussion
+The algorithm's accuracy is assessed through various metrics, including the Dice similarity coefficient (Dice) and mean squared error (MSE). The Dice coefficient indicates the spatial overlap between segmented and ground truth results. The algorithm achieves an average Dice coefficient of 91.8%, with exceptional segmentation accuracy for simpler liver shapes.
+
+The MSE, which measures pixel-wise differences between segmented and ground truth images, is exceptionally low at 0.0375. This low value indicates the algorithm's ability to closely match the ground truth.
+
+## Algorithm Performance and Challenges
+The algorithm performs best on CT slices where the liver's shape is simple and well-defined. As liver complexity increases and it interfaces with neighboring structures, segmentation quality decreases. Factors influencing this include the algorithm's internal energy parameters (alpha and beta) and the quality of image gradients. Challenges arise when liver edges are close to or share characteristics with surrounding structures.
+
+## Conclusion and Future Directions
+The developed active contour algorithm demonstrates its potential for accurate liver segmentation from CT scans. With an average Dice coefficient of 91.8% and a small error in liver volume estimation (5.8%), the algorithm proves effective. Future work could involve iterative parameter adjustment for the snake algorithm to enhance performance.
+
+In summary, this repository presents an efficient and viable solution for liver segmentation from CT scans using active contour models. The algorithm's integration into computer-aided diagnosis systems can improve accuracy and efficiency, ultimately benefiting liver disease diagnosis and treatment planning, and subsequently, patient outcomes. Further advancements can focus on refining the algorithm's accuracy and extending it to segment other organs simultaneously.
+
+## Results 
 
 <img width="200" alt="image" src="https://github.com/prateek2468/Liver_Tumor_Segmentation/assets/69041894/889a1204-d6da-4277-adc6-bc84befe88c3">
 <img width="243" alt="image" src="https://github.com/prateek2468/Liver_Tumor_Segmentation/assets/69041894/0e912c2b-205b-4e07-91f8-98a1c5308b79">
